@@ -162,12 +162,12 @@ function Pomodoro() {
         />
       </div>
 
-      <div className="grid grid-cols-2 items-stretch justify-items-stretch gap-1 col-span-12 lg:col-start-4 lg:col-span-6 text-center font-bold text-white">
+      <div className="grid grid-cols-8 items-stretch justify-items-stretch gap-1 col-span-12 lg:col-start-4 lg:col-span-6 text-center font-bold text-white">
 
 				<div
 					style={{ background: secondaryBg }}
           id="timer-label"
-          className="bg-white rounded-md flex justify-center items-center uppercase hover:opacity-60 transition-all duration-500"
+          className="col-span-3 bg-white rounded-md flex justify-center items-center uppercase hover:opacity-60 transition-all duration-500"
 					>
 					<span>{isBreak ? "Thư giãn" : "Làm việc"}</span>
         </div>
@@ -175,7 +175,7 @@ function Pomodoro() {
 				<div
 					style={{ background: secondaryBg }}
           id="time-left"
-          className="flex justify-center items-center bg-white text-6xl rounded-md py-8 hover:opacity-60 transition-all duration-500"
+          className="col-span-5 flex justify-center items-center bg-white text-6xl rounded-md py-8 hover:opacity-60 transition-all duration-500"
 					>
           {minutesTimer}:{secondsTimer}
         </div>
