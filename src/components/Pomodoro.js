@@ -17,7 +17,6 @@ function Menu(props) {
   );
 }
 
-
 function TimeChanger(props) {
   return (
     <div className="bg-white rounded-lg p-4">
@@ -53,7 +52,7 @@ function Audio() {
 }
 
 
-function Podomoro() {
+function Pomodoro() {
 
   let [minutes, setMinutes] = useState(25)
   let [seconds, setSeconds] = useState(0)
@@ -186,4 +185,4 @@ function Podomoro() {
   )
 }
 
-export default Podomoro
+export default Pomodoro
