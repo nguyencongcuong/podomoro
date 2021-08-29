@@ -10,40 +10,35 @@ function Menu(props) {
     <button
       id={props.id}
       className="bg-white hover:bg-green-50 font-bold hover:text-green-500 transition-all duration-500 rounded-md p-4"
-      onClick={props.onClick}>
+      onClick={props.onClick}
+    >
       {props.name}
     </button>
-  )
+  );
 }
+
 
 function TimeChanger(props) {
   return (
     <div className="bg-white rounded-lg p-4">
-      <h1
-        id={props.id}
-        className="uppercase font-bold text-center m-4">
+      <h1 id={props.id} className="uppercase font-bold text-center m-4">
         {props.name}
       </h1>
       <div className="flex justify-evenly items-center">
-        <button
-          id={props.decrementID}
-          onClick={props.decrement}>
+        <button id={props.decrementID} onClick={props.decrement}>
           <RemoveTwoToneIcon />
         </button>
-        <span
-          id={props.valueID}
-          className="font-bold text-2xl">
+        <span id={props.valueID} className="font-bold text-2xl">
           {props.value}
         </span>
-        <button
-          id={props.incrementID}
-          onClick={props.increment}>
+        <button id={props.incrementID} onClick={props.increment}>
           <AddTwoToneIcon />
         </button>
       </div>
     </div>
-  )
+  );
 }
+
 
 function Podomoro() {
 
@@ -90,7 +85,7 @@ function Podomoro() {
             }
             setSeconds(59)
           } else {
-            setSeconds(seconds - 1)
+						setSeconds(seconds - 1)
           }
       }, 10)
     }
