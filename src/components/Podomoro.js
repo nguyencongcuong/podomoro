@@ -1,12 +1,15 @@
 import React from 'react';
 import { useState, useEffect } from "react";
-import AddBoxIcon from '@material-ui/icons/AddBox';
-import IndeterminateCheckBoxIcon from '@material-ui/icons/IndeterminateCheckBox';
+import AddTwoToneIcon from '@material-ui/icons/AddTwoTone';
+import RemoveTwoToneIcon from '@material-ui/icons/RemoveTwoTone';
+import LocalCafeTwoToneIcon from '@material-ui/icons/LocalCafeTwoTone';
+import LaptopChromebookTwoToneIcon from '@material-ui/icons/LaptopChromebookTwoTone';
 
 function Menu(props) {
   return (
     <button
-      className="bg-white rounded-md p-4"
+      id={props.id}
+      className="bg-white hover:bg-green-50 font-bold hover:text-green-500 transition-all duration-500 rounded-md p-4"
       onClick={props.onClick}>
       {props.name}
     </button>
@@ -16,20 +19,26 @@ function Menu(props) {
 function TimeChanger(props) {
   return (
     <div className="bg-white rounded-lg p-4">
-      <h1 className="uppercase font-bold text-center m-4">
+      <h1
+        id={props.id}
+        className="uppercase font-bold text-center m-4">
         {props.name}
       </h1>
       <div className="flex justify-evenly items-center">
         <button
+          id={props.decrementID}
           onClick={props.decrement}>
-          <IndeterminateCheckBoxIcon color="action" />
+          <RemoveTwoToneIcon />
         </button>
-        <span className="font-bold text-2xl">
+        <span
+          id={props.valueID}
+          className="font-bold text-2xl">
           {props.value}
         </span>
         <button
+          id={props.incrementID}
           onClick={props.increment}>
-          <AddBoxIcon color="action" />
+          <AddTwoToneIcon />
         </button>
       </div>
     </div>
@@ -45,7 +54,7 @@ function Podomoro() {
   let [isReset, setIsReset] = useState(false)
 
   let [breakTime, setBreakTime] = useState(5)
-  let [workTime, setWorkTime] = useState(1)
+  let [workTime, setWorkTime] = useState(25)
 
   let minutesTimer = minutes < 10 ? `0${minutes}` : minutes
   let secondsTimer = seconds < 10 ? `0${seconds}` : seconds
@@ -64,7 +73,7 @@ function Podomoro() {
   }
 
   useEffect(() => {
-    return isBreak ? setMinutes(breakTime - 1) : setMinutes(workTime - 1)
+    return isBreak ? setMinutes(breakTime) : setMinutes(workTime)
   }, [isBreak, workTime, breakTime])
 
   useEffect(() => {
@@ -83,7 +92,7 @@ function Podomoro() {
           } else {
             setSeconds(seconds - 1)
           }
-      }, 100)
+      }, 10)
     }
     if(isReset && isPause) {
       setMinutes(25)
@@ -92,16 +101,28 @@ function Podomoro() {
   }, [seconds, isPause, isReset])
 
   return (
-    <div className="grid grid-cols-12 gap-1 w-screen p-8">
+    <React.Fragment>
 
+    <div className="grid grid-cols-12 gap-1 w-screen p-8">
+      <h1 className="col-span-12 text-center text-4xl font-bold uppercase mb-8">
+        Podomoro
+      </h1>
       <div className="col-span-12 lg:col-start-4 lg:col-span-6 grid lg:grid-cols-2 gap-1">
         <TimeChanger
+          id="break-label"
+          incrementID="break-increment"
+          decrementID="break-decrement"
+          valueID="break-length"
           name="Thời gian nghỉ"
           value={breakTime}
           increment={() => breakTime === 15 ? breakTime : setBreakTime(breakTime + 1)}
           decrement={() => breakTime === 1 ? breakTime : setBreakTime(breakTime - 1)}
         />
         <TimeChanger
+          id="session-label"
+          incrementID="session-increment"
+          decrementID="session-decrement"
+          valueID="session-length"
           name="Thời gian làm"
           value={workTime}
           increment={() => workTime === 60 ? breakTime : setWorkTime(workTime + 1)}
@@ -109,22 +130,35 @@ function Podomoro() {
         />
       </div>
 
-      <div className="grid grid-cols-2 gap-1 col-span-12 lg:col-start-4 lg:col-span-6 text-center font-bold text-white">
-        <div className="bg-white text-gray-800 rounded-md py-8">
-          {isBreak && "Đang giờ nghỉ nè"}
+      <div className="grid grid-cols-2 items-stretch justify-items-stretch gap-1 col-span-12 lg:col-start-4 lg:col-span-6 text-center font-bold text-white">
+        <div
+          id="timer-label"
+          className="bg-white text-gray-800 rounded-md flex justify-center items-center">
+          {
+            !isBreak ?
+            <div><span className="sr-only">
+            Làm
+            </span><LocalCafeTwoToneIcon style={{fontSize: 50}} /></div> :
+            <div><span className="sr-only">
+            Nghỉ
+            </span><LaptopChromebookTwoToneIcon style={{fontSize: 50}} /></div>
+          }
         </div>
-        <div className="bg-white text-6xl text-gray-800 rounded-md py-8">
+        <div
+          id="time-left"
+          className="bg-white text-6xl text-gray-800 rounded-md py-8">
           {minutesTimer}:{secondsTimer}
         </div>
       </div>
 
       <div className="col-span-12 lg:col-start-4 lg:col-span-6 grid grid-cols-3 gap-1">
-        <Menu name="Play" onClick={() => handlePlay()} />
-        <Menu name="Pause" onClick={() => handlePause()} />
-        <Menu name="Reset" onClick={() => handleReset()} />
+        <Menu id="start_stop" name="Play" onClick={() => handlePlay()} />
+        <Menu id="" name="Pause" onClick={() => handlePause()} />
+        <Menu id="reset" name="Reset" onClick={() => handleReset()} />
       </div>
 
     </div>
+    </React.Fragment>
   )
 }
 
