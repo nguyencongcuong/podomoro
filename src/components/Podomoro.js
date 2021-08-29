@@ -39,6 +39,19 @@ function TimeChanger(props) {
   );
 }
 
+function Audio() {
+	return (
+		<audio
+			controls
+			id="beep"
+			className="sr-only"
+			src="./beep.wav"
+			type="audio/wav"
+			autoPlay
+			/>
+	)
+}
+
 
 function Podomoro() {
 
@@ -50,6 +63,8 @@ function Podomoro() {
 
   let [breakTime, setBreakTime] = useState(5)
   let [workTime, setWorkTime] = useState(25)
+	const beep = document.getElementById("beep")
+
 
   let minutesTimer = minutes < 10 ? `0${minutes}` : minutes
   let secondsTimer = seconds < 10 ? `0${seconds}` : seconds
@@ -71,7 +86,10 @@ function Podomoro() {
     return isBreak ? setMinutes(breakTime) : setMinutes(workTime)
   }, [isBreak, workTime, breakTime])
 
+
+
   useEffect(() => {
+
     if(!isPause) {
       let interval = setInterval(() => {
         clearInterval(interval)
@@ -82,16 +100,23 @@ function Podomoro() {
               let newMinutes = !isBreak ? breakTime - 1 : workTime - 1
               setMinutes(newMinutes)
               setIsBreak(!isBreak)
+
+							// Play beep
+
+							beep.play()
+
             }
             setSeconds(59)
           } else {
 						setSeconds(seconds - 1)
           }
-      }, 10)
+      }, 1000)
     }
     if(isReset && isPause) {
       setMinutes(25)
       setSeconds(0)
+			beep.pause()
+			beep.currentTime = 0
     }
   }, [seconds, isPause, isReset])
 
@@ -110,8 +135,8 @@ function Podomoro() {
           valueID="break-length"
           name="Thời gian nghỉ"
           value={breakTime}
-          increment={() => breakTime === 15 ? breakTime : setBreakTime(breakTime + 1)}
-          decrement={() => breakTime === 1 ? breakTime : setBreakTime(breakTime - 1)}
+          increment={() => breakTime === 60 ? breakTime : setBreakTime(breakTime + 5)}
+          decrement={() => breakTime === 5 ? breakTime : setBreakTime(breakTime - 5)}
         />
         <TimeChanger
           id="session-label"
@@ -120,8 +145,8 @@ function Podomoro() {
           valueID="session-length"
           name="Thời gian làm"
           value={workTime}
-          increment={() => workTime === 60 ? breakTime : setWorkTime(workTime + 1)}
-          decrement={() => workTime === 1 ? breakTime : setWorkTime(workTime - 1)}
+          increment={() => workTime === 60 ? breakTime : setWorkTime(workTime + 5)}
+          decrement={() => workTime === 5 ? breakTime : setWorkTime(workTime - 5)}
         />
       </div>
 
@@ -147,10 +172,14 @@ function Podomoro() {
       </div>
 
       <div className="col-span-12 lg:col-start-4 lg:col-span-6 grid grid-cols-3 gap-1">
-        <Menu id="start_stop" name="Play" onClick={() => handlePlay()} />
-        <Menu id="" name="Pause" onClick={() => handlePause()} />
+					{
+						!isPause ? <Menu id="start_stop" name="Pause" onClick={() => handlePause()} /> :
+						<Menu id="start_stop" name="Play" onClick={() => handlePlay()} />
+					}
         <Menu id="reset" name="Reset" onClick={() => handleReset()} />
       </div>
+
+			<Audio />
 
     </div>
     </React.Fragment>
