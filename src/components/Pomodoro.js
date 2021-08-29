@@ -4,12 +4,16 @@ import AddTwoToneIcon from '@material-ui/icons/AddTwoTone';
 import RemoveTwoToneIcon from '@material-ui/icons/RemoveTwoTone';
 import LocalCafeTwoToneIcon from '@material-ui/icons/LocalCafeTwoTone';
 import LaptopChromebookTwoToneIcon from '@material-ui/icons/LaptopChromebookTwoTone';
+import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
+import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
+import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 
 function Menu(props) {
   return (
     <button
+			style={props.style}
       id={props.id}
-      className="bg-white hover:bg-green-50 font-bold hover:text-green-500 transition-all duration-500 rounded-md p-4"
+      className="bg-white hover:opacity-60 font-bold hover:text-gray-200 transition-all duration-500 rounded-md p-4"
       onClick={props.onClick}
     >
       {props.name}
@@ -19,7 +23,7 @@ function Menu(props) {
 
 function TimeChanger(props) {
   return (
-    <div className="bg-white rounded-lg p-4">
+    <div style={props.style} className="rounded-lg p-4 hover:opacity-60 transition-all duration-500">
       <h1 id={props.id} className="uppercase font-bold text-center m-4">
         {props.name}
       </h1>
@@ -62,8 +66,12 @@ function Pomodoro() {
 
   let [breakTime, setBreakTime] = useState(5)
   let [workTime, setWorkTime] = useState(25)
-	const beep = document.getElementById("beep")
 
+	let [bg, setBg] = useState("#f1f1f1")
+	let [secondaryBg, setSecondaryBg] = useState("hsla(220, 14%, 96%, 10%)")
+
+
+	const beep = document.getElementById("beep")
 
   let minutesTimer = minutes < 10 ? `0${minutes}` : minutes
   let secondsTimer = seconds < 10 ? `0${seconds}` : seconds
@@ -82,10 +90,9 @@ function Pomodoro() {
   }
 
   useEffect(() => {
+		{ isBreak ? setBg("hsl(105, 28%, 58%)") : setBg("hsl(0, 44%, 48%)") }
     return isBreak ? setMinutes(breakTime) : setMinutes(workTime)
   }, [isBreak, workTime, breakTime])
-
-
 
   useEffect(() => {
 
@@ -114,6 +121,8 @@ function Pomodoro() {
     if(isReset && isPause) {
       setMinutes(25)
       setSeconds(0)
+			setBreakTime(5)
+			setWorkTime(25)
 			beep.pause()
 			beep.currentTime = 0
     }
@@ -122,27 +131,31 @@ function Pomodoro() {
   return (
     <React.Fragment>
 
-    <div className="grid grid-cols-12 gap-1 w-screen p-8">
-      <h1 className="col-span-12 text-center text-4xl font-bold uppercase mb-8">
+    <div
+		 	style={{ background: `${bg}` }}
+			className="grid grid-cols-12 gap-1 w-screen h-screen p-8 transition transition-all duration-500">
+      <h1 className="col-span-12 text-center text-4xl text-gray-50 font-bold uppercase">
         Podomoro
       </h1>
-      <div className="col-span-12 lg:col-start-4 lg:col-span-6 grid lg:grid-cols-2 gap-1">
+      <div className="col-span-12 lg:col-start-4 lg:col-span-6 grid grid-cols-2 gap-1">
         <TimeChanger
+					style={{background: secondaryBg}}
           id="break-label"
           incrementID="break-increment"
           decrementID="break-decrement"
           valueID="break-length"
-          name="Thời gian nghỉ"
+          name={<LocalCafeTwoToneIcon style={{fontSize: 50}} />}
           value={breakTime}
           increment={() => breakTime === 60 ? breakTime : setBreakTime(breakTime + 5)}
           decrement={() => breakTime === 5 ? breakTime : setBreakTime(breakTime - 5)}
         />
         <TimeChanger
+					style={{background: secondaryBg}}
           id="session-label"
           incrementID="session-increment"
           decrementID="session-decrement"
           valueID="session-length"
-          name="Thời gian làm"
+          name={<LaptopChromebookTwoToneIcon style={{fontSize: 50}} />}
           value={workTime}
           increment={() => workTime === 60 ? breakTime : setWorkTime(workTime + 5)}
           decrement={() => workTime === 5 ? breakTime : setWorkTime(workTime - 5)}
@@ -150,32 +163,43 @@ function Pomodoro() {
       </div>
 
       <div className="grid grid-cols-2 items-stretch justify-items-stretch gap-1 col-span-12 lg:col-start-4 lg:col-span-6 text-center font-bold text-white">
-        <div
+
+				<div
+					style={{ background: secondaryBg }}
           id="timer-label"
-          className="bg-white text-gray-800 rounded-md flex justify-center items-center">
-          {
-            !isBreak ?
-            <div><span className="sr-only">
-            Làm
-            </span><LocalCafeTwoToneIcon style={{fontSize: 50}} /></div> :
-            <div><span className="sr-only">
-            Nghỉ
-            </span><LaptopChromebookTwoToneIcon style={{fontSize: 50}} /></div>
-          }
+          className="bg-white rounded-md flex justify-center items-center uppercase hover:opacity-60 transition-all duration-500"
+					>
+					<span>{isBreak ? "Thư giãn" : "Làm việc"}</span>
         </div>
-        <div
+
+				<div
+					style={{ background: secondaryBg }}
           id="time-left"
-          className="bg-white text-6xl text-gray-800 rounded-md py-8">
+          className="flex justify-center items-center bg-white text-6xl rounded-md py-8 hover:opacity-60 transition-all duration-500"
+					>
           {minutesTimer}:{secondsTimer}
         </div>
+
       </div>
 
-      <div className="col-span-12 lg:col-start-4 lg:col-span-6 grid grid-cols-3 gap-1">
+      <div className="grid grid-cols-2 col-span-12 lg:col-start-4 lg:col-span-6 gap-1">
 					{
-						!isPause ? <Menu id="start_stop" name="Pause" onClick={() => handlePause()} /> :
-						<Menu id="start_stop" name="Play" onClick={() => handlePlay()} />
+						!isPause ?
+						<Menu
+							style={{ background: secondaryBg }}
+							id="start_stop"
+							name={<PauseCircleOutlineIcon style={{fontSize: 50}} />}
+							onClick={() => handlePause()} /> :
+						<Menu
+							style={{ background: secondaryBg }}
+							id="start_stop" name={<PlayCircleOutlineIcon style={{fontSize: 50}} />}
+							onClick={() => handlePlay()} />
 					}
-        <Menu id="reset" name="Reset" onClick={() => handleReset()} />
+        <Menu
+					style={{ background: secondaryBg }}
+					id="reset"
+					name={<RotateLeftIcon style={{fontSize: 50}} />}
+					onClick={() => handleReset()} />
       </div>
 
 			<Audio />
