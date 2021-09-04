@@ -135,7 +135,7 @@ function Pomodoro() {
 		 	style={{ background: `${bg}` }}
 			className="grid grid-cols-12 gap-1 w-screen h-screen p-8 transition transition-all duration-500">
       <h1 className="col-span-12 text-center text-4xl text-gray-50 font-bold uppercase">
-        Podomoro
+        Pomodoro
       </h1>
       <div className="col-span-12 lg:col-start-4 lg:col-span-6 grid grid-cols-2 gap-1">
         <TimeChanger
