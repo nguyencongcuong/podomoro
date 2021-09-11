@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/podomoro/static/css/main.ede49049.chunk.css",
+    "main.js": "/podomoro/static/js/main.ea5653be.chunk.js",
+    "main.js.map": "/podomoro/static/js/main.ea5653be.chunk.js.map",
+    "runtime-main.js": "/podomoro/static/js/runtime-main.febbd7e9.js",
+    "runtime-main.js.map": "/podomoro/static/js/runtime-main.febbd7e9.js.map",
+    "static/js/2.3136f008.chunk.js": "/podomoro/static/js/2.3136f008.chunk.js",
+    "static/js/2.3136f008.chunk.js.map": "/podomoro/static/js/2.3136f008.chunk.js.map",
+    "static/js/3.a42fa44c.chunk.js": "/podomoro/static/js/3.a42fa44c.chunk.js",
+    "static/js/3.a42fa44c.chunk.js.map": "/podomoro/static/js/3.a42fa44c.chunk.js.map",
+    "index.html": "/podomoro/index.html",
+    "static/css/main.ede49049.chunk.css.map": "/podomoro/static/css/main.ede49049.chunk.css.map",
+    "static/js/2.3136f008.chunk.js.LICENSE.txt": "/podomoro/static/js/2.3136f008.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.febbd7e9.js",
+    "static/js/2.3136f008.chunk.js",
+    "static/css/main.ede49049.chunk.css",
+    "static/js/main.ea5653be.chunk.js"
+  ]
+}
