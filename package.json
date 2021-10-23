@@ -1,6 +1,6 @@
 {
   "name": "podomoro",
-  "homepage": "https://nguyencongcuong.github.io/podomoro",
+  "homepage": "https://nguyencongcuong.github.io/pomodoro",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
@@ -31,7 +31,6 @@
   "browserslist": {
     "production": [
       ">0.2%",
-      "not dead",
       "not op_mini all"
     ],
     "development": [
