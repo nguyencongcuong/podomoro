@@ -1,12 +1,14 @@
 import React from 'react';
 import { useState, useEffect } from "react";
-import AddTwoToneIcon from '@material-ui/icons/AddTwoTone';
-import RemoveTwoToneIcon from '@material-ui/icons/RemoveTwoTone';
-import LocalCafeTwoToneIcon from '@material-ui/icons/LocalCafeTwoTone';
-import LaptopChromebookTwoToneIcon from '@material-ui/icons/LaptopChromebookTwoTone';
-import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
-import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
-import RotateLeftIcon from '@material-ui/icons/RotateLeft';
+import {
+	RiAddFill,
+	RiBriefcase2Fill,
+	RiEyeCloseFill,
+	RiPauseFill,
+	RiPlayFill,
+	RiRefreshLine,
+	RiSubtractFill
+} from "react-icons/ri";
 
 function Menu(props) {
   return (
@@ -29,13 +31,13 @@ function TimeChanger(props) {
       </h1>
       <div className="flex justify-evenly items-center">
         <button id={props.decrementID} onClick={props.decrement}>
-          <RemoveTwoToneIcon />
+          <RiSubtractFill />
         </button>
         <span id={props.valueID} className="font-bold text-2xl">
           {props.value}
         </span>
         <button id={props.incrementID} onClick={props.increment}>
-          <AddTwoToneIcon />
+          <RiAddFill />
         </button>
       </div>
     </div>
@@ -144,7 +146,7 @@ function Pomodoro() {
           incrementID="break-increment"
           decrementID="break-decrement"
           valueID="break-length"
-          name={<LocalCafeTwoToneIcon style={{fontSize: 50}} />}
+          name={<RiEyeCloseFill style={{fontSize: 50}} />}
           value={breakTime}
           increment={() => breakTime === 60 ? breakTime : setBreakTime(breakTime + 5)}
           decrement={() => breakTime === 5 ? breakTime : setBreakTime(breakTime - 5)}
@@ -155,7 +157,7 @@ function Pomodoro() {
           incrementID="session-increment"
           decrementID="session-decrement"
           valueID="session-length"
-          name={<LaptopChromebookTwoToneIcon style={{fontSize: 50}} />}
+          name={<RiBriefcase2Fill style={{fontSize: 50}} />}
           value={workTime}
           increment={() => workTime === 60 ? breakTime : setWorkTime(workTime + 5)}
           decrement={() => workTime === 5 ? breakTime : setWorkTime(workTime - 5)}
@@ -188,17 +190,17 @@ function Pomodoro() {
 						<Menu
 							style={{ background: secondaryBg }}
 							id="start_stop"
-							name={<PauseCircleOutlineIcon style={{fontSize: 50}} />}
+							name={<RiPauseFill style={{fontSize: 50}} />}
 							onClick={() => handlePause()} /> :
 						<Menu
 							style={{ background: secondaryBg }}
-							id="start_stop" name={<PlayCircleOutlineIcon style={{fontSize: 50}} />}
+							id="start_stop" name={<RiPlayFill style={{fontSize: 50}} />}
 							onClick={() => handlePlay()} />
 					}
         <Menu
 					style={{ background: secondaryBg }}
 					id="reset"
-					name={<RotateLeftIcon style={{fontSize: 50}} />}
+					name={<RiRefreshLine style={{fontSize: 50}} />}
 					onClick={() => handleReset()} />
       </div>
 
